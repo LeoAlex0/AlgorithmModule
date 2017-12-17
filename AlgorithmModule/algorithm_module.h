@@ -4,13 +4,12 @@
 #include <cstdlib>
 #include <algorithm>
 #include <functional>
-#include <map>
 #include <unordered_map>
-#include <vector>
 #include <list>
 #include <utility>
 
-#define PUBLIC __declspec(dllexport)
+#define PUBLIC __declspec(dllexport) //dll输出函数，至于为什么要叫public.......
+
 namespace GraphAlgorithm {
 	//不存在的编号
 	const int NIL = -1;
@@ -41,9 +40,29 @@ namespace GraphAlgorithm {
 	//@Return:节点idx_v的编号为idx_e的边的容量
 	typedef std::function <double(int idx_v, int idx_e)> EdgeContainAdapter;
 
+	struct GraphAdapter {
+		FirstEdgeAdapter firstOf;
+		NextEdgeAdapter nextOf;
+		EdgeToAdapter destOf;
+		EdgeLengthAdapter lengthOf;
+		EdgeContainAdapter containOf;
+	};
+
+	//@Param idx_start_v:最初的节点编号
+	//@Param idx_dest_v:目标节点编号
+	//@Param firstOf,nextOf,edgeTo:图的属性
+	//@Return: 返回所需的步数
 	PUBLIC int
 		bfsStep(
 			int idx_start_v, int idx_dest_v,
-			FirstEdgeAdapter firstOf, NextEdgeAdapter nextOf,
-			EdgeToAdapter edgeTo);
+			const FirstEdgeAdapter & firstOf, const NextEdgeAdapter & nextOf,
+			const EdgeToAdapter & destOf);
+
+	inline int
+		bfsStep(
+			int idx_start_v, int idx_dest_v,
+			const GraphAdapter & graph) {
+		return bfsStep(idx_start_v, idx_dest_v,
+				graph.firstOf, graph.nextOf, graph.destOf);
+	}
 }
