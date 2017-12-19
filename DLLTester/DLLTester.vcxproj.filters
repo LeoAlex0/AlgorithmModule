@@ -31,10 +31,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\Release\AlgorithmModule.lib">
-      <Filter>资源文件</Filter>
-    </Library>
-    <Library Include="..\x64\Release\AlgorithmModule.lib">
+    <Library Include="..\Debug\AlgorithmModule.lib">
       <Filter>资源文件</Filter>
     </Library>
   </ItemGroup>

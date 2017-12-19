@@ -11,8 +11,6 @@
 #define PUBLIC __declspec(dllexport) //dll输出函数，至于为什么要叫public.......
 
 namespace GraphAlgorithm {
-	//不存在的编号
-	const int NIL = -1;
 
 	//适配器类型声明
 
@@ -40,6 +38,15 @@ namespace GraphAlgorithm {
 	//@Return:节点idx_v的编号为idx_e的边的容量
 	typedef std::function <double(int idx_v, int idx_e)> EdgeContainAdapter;
 
+	//@Param first:表示点的序列
+	//@Param second:表示边的序列
+	//@Description:如果无路径，则点的序列为空
+	typedef std::pair<std::list<int>,std::list<int>> PathType;
+
+	//不存在的编号,长度..
+	const int NIL = -1;
+	const static PathType NIL_PATH = std::make_pair(std::list<int>(), std::list<int>());
+
 	struct GraphAdapter {
 		FirstEdgeAdapter firstOf;
 		NextEdgeAdapter nextOf;
@@ -52,11 +59,22 @@ namespace GraphAlgorithm {
 	//@Param idx_dest_v:目标节点编号
 	//@Param firstOf,nextOf,edgeTo:图的属性
 	//@Return: 返回所需的步数
-	PUBLIC int
+	
+	PUBLIC PathType
+		bfs(
+			int idx_start_v,int idx_dest_v,
+			const FirstEdgeAdapter & firstOf,const NextEdgeAdapter & nextOf,
+			const EdgeToAdapter & destOf);
+
+	inline int
 		bfsStep(
 			int idx_start_v, int idx_dest_v,
 			const FirstEdgeAdapter & firstOf, const NextEdgeAdapter & nextOf,
-			const EdgeToAdapter & destOf);
+			const EdgeToAdapter & destOf) {
+
+		PathType tmp = bfs(idx_start_v, idx_dest_v, firstOf, nextOf, destOf);
+		return tmp.first.size() - 1;
+	};
 
 	inline int
 		bfsStep(

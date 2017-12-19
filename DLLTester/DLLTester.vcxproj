@@ -160,8 +160,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\Release\AlgorithmModule.lib" />
-    <Library Include="..\x64\Release\AlgorithmModule.lib" />
+    <Library Include="..\Debug\AlgorithmModule.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
